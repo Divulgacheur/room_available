@@ -4,19 +4,19 @@ import re
 import time
 
 def get_av(hotel):
-    headers = { 'x-ihg-api-key': '' }
+    headers = { 'x-OTL-api-key': 'Your own API key for your account' }
 
     params = (
         ('hotelCodes', hotel),
-        #('rateCodes', 'IVEDI'),
+
         ('rateCodes', 'IGCOR'), 
-        #('rateCodes', 'IVED2'),
+
         ('startDate', '2020-05-10T00:00:00Z'),
         ('endDate', '2020-06-29T00:00:00Z'),
         ('lengthOfStay', '1'),
     )
 
-    response = requests.get('https://apis.ihg.com/availability/v1/windows', headers=headers, params=params)
+    response = requests.get('https://apis.OTL.com/availability/v1/windows', headers=headers, params=params)
     
 
     #pprint.pprint(response.json() )
@@ -30,9 +30,10 @@ def get_av(hotel):
     except:
         print('pas dispo\n')
     return response
+
 def get_hotels(state,city):
     
-    url = 'https://www.ihg.com/destinations/fr/fr/'+state+'/'+city+'-hotels'
+    url = 'https://www.OTL.com/destinations/fr/fr/'+state+'/'+city+'-hotels'
     print(url)
     response = requests.get(url)
 
@@ -44,13 +45,13 @@ def get_hotels(state,city):
     print(total+' hotel(s) à '+city)
     return resultats
 
-r=get_av('MRSHA')
+get_av('MRSHA') #show all availibility for 1 night stay at the Intercontinental Marseille - Hotel Dieu (hotel code MRSHA) - from 10/05/2020 to 29/06/2020
 
-'''
-i=get_hotels('spain','barcelona')
-i=get_hotels('france','paris')
 
-for hotel in i:
+
+
+
+for hotel in get_hotels('france','paris'): # show same but for all Paris's OTL hotels
     print('\n\n'+hotel[0]+'\n')
     get_av(hotel[1])
-'''
+
